@@ -12,7 +12,7 @@
 
 
 static NSString *const qDefaultUrlKey = @"url";
-static NSString *const qDefaultUrlValue = @"http://qvacua.com";
+static NSString *const qDefaultUrlValue = @"http://localhost:26497/templates/jquery/";
 static NSString *const qDefaultReloadRegularlyKey = @"update-regularly";
 static NSString *const qDefaultIntervalKey = @"interval";
 static const int qDefaultIntervalValue = 15;
@@ -78,6 +78,7 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
 - (IBAction)toggleBackground:(id)sender {
     [self.window toggleDesktopBackground];
     self.webView.mainFrame.frameView.allowsScrolling = !self.window.background;
+    [self.webView setDrawsBackground:NO];
 }
 
 - (IBAction)zoomIn:(id)sender {

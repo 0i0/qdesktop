@@ -22,32 +22,30 @@
     if (self.background) {
         [self setLevel:NSNormalWindowLevel];
         [self makeKeyAndOrderFront:self];
-
         self.background = NO;
         return;
     }
 
     [self setLevel:kCGDesktopWindowLevel];
     [self orderBack:self];
-
+    
     self.background = YES;
 }
 
 #pragma mark NSWindow
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle
                   backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation {
-
+    
 #ifdef DEBUG
-    self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation];
+    self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:NO];
 #else
-    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType
-                                defer:deferCreation];
+    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:deferCreation];
 #endif
-
     if (!self) {
         return nil;
     }
-
+    [self setOpaque:NO];
+    [self setBackgroundColor:[NSColor clearColor]];
     _background = NO;
 
 #ifndef DEBUG
