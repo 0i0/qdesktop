@@ -1,7 +1,5 @@
-Qdesktop
+Qnonky is a modified version of Qdesktop by [qvacua](https://github.com/qvacua)
 ========
-
-[Download](https://github.com/qvacua/qdesktop/wiki)
 
 ## About
 Qdesktop lets you set a web page of your liking as the desktop background of your Mac. You can let Qdesktop reload the page at regular intervals.
