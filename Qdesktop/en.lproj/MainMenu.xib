@@ -423,44 +423,6 @@
         </window>
         <menu id="557">
             <items>
-                <menuItem title="Interact With Web Page" id="568">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="toggleBackground:" target="494" id="612"/>
-                        <binding destination="494" name="enabled" keyPath="self.window.background" id="dFf-0E-ABC"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Enter Background Mode" id="h3M-NP-mSF">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="toggleBackground:" target="494" id="ajF-Ri-o4h"/>
-                        <binding destination="494" name="enabled" keyPath="self.window.background" id="sGo-4a-dA8">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="587"/>
-                <menuItem title="Zoom In" id="581">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="zoomIn:" target="494" id="609"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Zoom to Actual Size" id="582">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="zoomToActualSize:" target="494" id="610"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Zoom Out" id="583">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="zoomOut:" target="494" id="611"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="589"/>
                 <menuItem title="Reload" id="620">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
