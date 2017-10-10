@@ -22,6 +22,7 @@
 @property (weak) IBOutlet NSTextField *intervalTextField;
 @property (weak) IBOutlet NSButton *regularReloadCheckbox;
 @property (weak) IBOutlet NSButton *interactWhenLaunchesCheckbox;
+@property (weak) IBOutlet NSButton *launchAtLoginCheckbox;
 
 #pragma mark IBActions
 - (IBAction)toggleBackground:(id)sender;
@@ -32,7 +33,6 @@
 - (IBAction)zoomOut:(id)sender;
 - (IBAction)openPrefsWindow:(id)sender;
 - (IBAction)prefsWindowOk:(id)sender;
-- (IBAction)launchAtLogin:(id)sender;
 
 #pragma mark NSUserInterfaceValidations
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;

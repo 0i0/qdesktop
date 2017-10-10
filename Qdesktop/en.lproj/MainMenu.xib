@@ -383,11 +383,13 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="117" y="-56"/>
         </menu>
         <customObject id="494" customClass="QDAppDelegate">
             <connections>
                 <outlet property="interactWhenLaunchesCheckbox" destination="5uC-rY-o3C" id="JtP-lJ-uf2"/>
                 <outlet property="intervalTextField" destination="743" id="762"/>
+                <outlet property="launchAtLoginCheckbox" destination="gzv-nT-eTT" id="HHV-eE-CrQ"/>
                 <outlet property="regularReloadCheckbox" destination="644" id="741"/>
                 <outlet property="statusMenu" destination="557" id="569"/>
                 <outlet property="urlField" destination="596" id="617"/>

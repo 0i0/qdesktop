@@ -98,28 +98,6 @@ static const BOOL qDefaultLaunchAtLoginValue = NO;
     [self.webView zoomPageOut:self];
 }
 
-- (IBAction)launchAtLogin:(id)sender {
-    if (true) {
-        NSLog(@"adding login item");
-        NSURL *bundleURL = [NSURL fileURLWithPath:@"com.liorhakim.Qnonky"];
-        LSSharedFileListInsertItemURL(loginItems,
-                                      kLSSharedFileListItemLast,
-                                      NULL,
-                                      NULL,
-                                      (__bridge CFURLRef)bundleURL,
-                                      
-                                      NULL,
-                                      NULL);
-    } else {
-        LSSharedFileListItemRef loginItemRef = [self getLoginItem];
-        if (loginItemRef) {
-            LSSharedFileListItemRemove(loginItems, loginItemRef);
-            CFRelease(loginItemRef);
-        }
-        
-    }
-}
-
 // MIT license
 - (BOOL)isLaunchAtStartup {
     // See if the app is currently in LoginItems.
@@ -287,6 +265,10 @@ static const BOOL qDefaultLaunchAtLoginValue = NO;
     self.interactWhenLaunchesCheckbox.state = NSOffState;
     if (self.interactWhenLaunches) {
         self.interactWhenLaunchesCheckbox.state = NSOnState;
+    }
+    self.launchAtLoginCheckbox.state = NSOffState;
+    if ([self isLaunchAtStartup]) {
+        self.launchAtLoginCheckbox.state = NSOnState;
     }
 }
 
