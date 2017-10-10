@@ -32,6 +32,7 @@
 - (IBAction)zoomOut:(id)sender;
 - (IBAction)openPrefsWindow:(id)sender;
 - (IBAction)prefsWindowOk:(id)sender;
+- (IBAction)launchAtLogin:(id)sender;
 
 #pragma mark NSUserInterfaceValidations
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;

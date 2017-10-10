@@ -572,6 +572,17 @@ Gw
                             <binding destination="767" name="value" keyPath="automaticallyChecksForUpdates" id="787"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gzv-nT-eTT">
+                        <rect key="frame" x="49" y="17" width="103" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="fAI-4d-UEB">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                            <connections>
+                                <action selector="toggleLaunchAtStartup:" target="494" id="dfq-Bt-IsR"/>
+                            </connections>
+                        </buttonCell>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="596" firstAttribute="baseline" secondItem="594" secondAttribute="baseline" id="631"/>

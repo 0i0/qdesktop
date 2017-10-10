@@ -18,6 +18,8 @@ static NSString *const qDefaultIntervalKey = @"interval";
 static const int qDefaultIntervalValue = 15;
 static NSString *const qDefaultInteractWhenLaunchesKey = @"interact-when-launches";
 static const BOOL qDefaultInteractWhenLaunchesValue = NO;
+static NSString *const qDefaultLaunchAtLoginKey = @"launch-at-login";
+static const BOOL qDefaultLaunchAtLoginValue = NO;
 
 @interface QDAppDelegate ()
 
@@ -28,10 +30,13 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
 @property NSInteger interval;
 @property NSTimer *timer;
 @property BOOL interactWhenLaunches;
+@property BOOL launchAtLogin;
 
 @end
 
-@implementation QDAppDelegate
+@implementation QDAppDelegate{
+    LSSharedFileListRef loginItems;
+}
 
 #pragma mark NSUserInterfaceValidations
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem {
@@ -93,6 +98,96 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
     [self.webView zoomPageOut:self];
 }
 
+- (IBAction)launchAtLogin:(id)sender {
+    if (true) {
+        NSLog(@"adding login item");
+        NSURL *bundleURL = [NSURL fileURLWithPath:@"com.liorhakim.Qnonky"];
+        LSSharedFileListInsertItemURL(loginItems,
+                                      kLSSharedFileListItemLast,
+                                      NULL,
+                                      NULL,
+                                      (__bridge CFURLRef)bundleURL,
+                                      
+                                      NULL,
+                                      NULL);
+    } else {
+        LSSharedFileListItemRef loginItemRef = [self getLoginItem];
+        if (loginItemRef) {
+            LSSharedFileListItemRemove(loginItems, loginItemRef);
+            CFRelease(loginItemRef);
+        }
+        
+    }
+}
+
+// MIT license
+- (BOOL)isLaunchAtStartup {
+    // See if the app is currently in LoginItems.
+    LSSharedFileListItemRef itemRef = [self itemRefInLoginItems];
+    // Store away that boolean.
+    BOOL isInList = itemRef != nil;
+    // Release the reference if it exists.
+    if (itemRef != nil) CFRelease(itemRef);
+    
+    return isInList;
+}
+
+- (IBAction)toggleLaunchAtStartup:(id)sender {
+    // Toggle the state.
+    BOOL shouldBeToggled = ![self isLaunchAtStartup];
+    // Get the LoginItems list.
+    LSSharedFileListRef loginItemsRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItemsRef == nil) return;
+    if (shouldBeToggled) {
+        self.launchAtLogin = YES;
+        // Add the app to the LoginItems list.
+        CFURLRef appUrl = (__bridge CFURLRef)[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+        LSSharedFileListItemRef itemRef = LSSharedFileListInsertItemURL(loginItemsRef, kLSSharedFileListItemLast, NULL, NULL, appUrl, NULL, NULL);
+        if (itemRef) CFRelease(itemRef);
+        
+    }
+    else {
+        self.launchAtLogin = NO;
+        // Remove the app from the LoginItems list.
+        LSSharedFileListItemRef itemRef = [self itemRefInLoginItems];
+        LSSharedFileListItemRemove(loginItemsRef,itemRef);
+        if (itemRef != nil) CFRelease(itemRef);
+    }
+    [self.userDefaults setBool:self.launchAtLogin forKey:qDefaultLaunchAtLoginKey];
+    CFRelease(loginItemsRef);
+}
+
+- (LSSharedFileListItemRef)itemRefInLoginItems {
+    LSSharedFileListItemRef itemRef = nil;
+    
+    // Get the app's URL.
+    NSURL *appUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    // Get the LoginItems list.
+    LSSharedFileListRef loginItemsRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItemsRef == nil) return nil;
+    // Iterate over the LoginItems.
+    NSArray *loginItems = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItemsRef, nil);
+    for (int currentIndex = 0; currentIndex < [loginItems count]; currentIndex++) {
+        // Get the current LoginItem and resolve its URL.
+        CFURLRef itemURLRef;
+        LSSharedFileListItemRef currentItemRef = (__bridge LSSharedFileListItemRef)[loginItems objectAtIndex:currentIndex];
+        if (LSSharedFileListItemResolve(currentItemRef, 0, &itemURLRef, NULL) == noErr) {
+            // Compare the URLs for the current LoginItem and the app.
+            if ([appUrl isEqual:((__bridge NSURL *)itemURLRef)]) {
+                // Save the LoginItem reference.
+                itemRef = currentItemRef;
+            }
+        }
+    }
+    // Retain the LoginItem reference.
+    if (itemRef != nil) CFRetain(itemRef);
+    // Release the LoginItems lists.
+    //[loginItems release];
+    CFRelease(loginItemsRef);
+    
+    return itemRef;
+}
+
 #pragma mark NSAppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     self.userDefaults = [NSUserDefaults standardUserDefaults];
@@ -145,6 +240,10 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
     if ([self.userDefaults objectForKey:qDefaultInteractWhenLaunchesKey] == nil) {
         [self.userDefaults setBool:qDefaultInteractWhenLaunchesValue forKey:qDefaultInteractWhenLaunchesKey];
     }
+    if ([self.userDefaults objectForKey:qDefaultLaunchAtLoginKey] == nil) {
+        [self.userDefaults setBool:qDefaultLaunchAtLoginValue forKey:qDefaultLaunchAtLoginKey];
+    }
+    
 }
 
 - (void)readDefaults {
@@ -152,6 +251,7 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
     self.reloadRegularly = [self.userDefaults boolForKey:qDefaultReloadRegularlyKey];
     self.interval = [self.userDefaults integerForKey:qDefaultIntervalKey];
     self.interactWhenLaunches = [self.userDefaults boolForKey:qDefaultInteractWhenLaunchesKey];
+    self.launchAtLogin = [self.userDefaults boolForKey:qDefaultLaunchAtLoginKey];
 }
 
 - (void)storeNewDefaults {
@@ -205,6 +305,28 @@ static const BOOL qDefaultInteractWhenLaunchesValue = NO;
 
 - (void)timerFireMethod:(NSTimer *)theTimer {
     [self updateWebView];
+}
+- (LSSharedFileListItemRef)getLoginItem
+{
+    CFArrayRef snapshotRef = LSSharedFileListCopySnapshot(loginItems, NULL);
+    NSURL *bundleURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    
+    LSSharedFileListItemRef itemRef = NULL;
+    CFURLRef itemURLRef;
+    
+    for (id item in (__bridge NSArray*)snapshotRef) {
+        itemRef = (__bridge LSSharedFileListItemRef)item;
+        if (LSSharedFileListItemResolve(itemRef, 0, &itemURLRef, NULL) == noErr) {
+            if ([bundleURL isEqual:((__bridge NSURL *)itemURLRef)]) {
+                CFRetain(itemRef);
+                break;
+            }
+        }
+        itemRef = NULL;
+    }
+    
+    CFRelease(snapshotRef);
+    return itemRef;
 }
 
 @end
