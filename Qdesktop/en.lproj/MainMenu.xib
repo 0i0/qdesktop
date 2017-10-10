@@ -20,10 +20,10 @@
         </customObject>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
-                <menuItem title="Qdesktop+nonky" id="56">
-                    <menu key="submenu" title="Qdesktop+nonky" systemMenu="apple" id="57">
+                <menuItem title="Qnonky" id="56">
+                    <menu key="submenu" title="Qnonky" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About Qdesktop+nonky" id="58">
+                            <menuItem title="About Qnonky" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
@@ -42,7 +42,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide Qdesktop+nonky" keyEquivalent="h" id="134">
+                            <menuItem title="Hide Qnonky" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -61,7 +61,7 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit Qdesktop+nonky" keyEquivalent="q" id="136">
+                            <menuItem title="Quit Qnonky" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="terminate:" target="-3" id="449"/>
                                 </connections>
@@ -397,7 +397,7 @@
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <window title="Qdesktop+nonky+nonky" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="547" customClass="QDWindow">
+        <window title="Qnonky+nonky" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="547" customClass="QDWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="514" height="280"/>
@@ -443,7 +443,7 @@
                         <action selector="checkForUpdates:" target="767" id="768"/>
                     </connections>
                 </menuItem>
-                <menuItem title="About Qdesktop+nonky" id="765">
+                <menuItem title="About Qnonky" id="765">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="orderFrontStandardAboutPanel:" target="-2" id="766"/>
@@ -528,7 +528,7 @@ Gw
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="5uC-rY-o3C">
                         <rect key="frame" x="49" y="72" width="422" height="18"/>
-                        <buttonCell key="cell" type="check" title="When Qdesktop+nonky launches, interact with web page" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="rU6-xm-zeQ">
+                        <buttonCell key="cell" type="check" title="When Qnonky launches, interact with web page" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="rU6-xm-zeQ">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
